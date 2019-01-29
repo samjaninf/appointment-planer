@@ -15,7 +15,7 @@ You need Composer and Node.js for installing.
 Copy example env file and edit with your settings
 
 ```shell
-cp env.example.ini env.example.ini
+cp env.example.ini env.ini
 ```
 
 Next step let composer install php packages
