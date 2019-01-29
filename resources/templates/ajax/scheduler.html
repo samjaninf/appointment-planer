@@ -1,0 +1,84 @@
+<h4 class="text-center">Wähle einen Tag</h4>
+
+<div class="days-container">
+    <ul class="no-bullet days text-center">
+    {% for slot in slots %}
+        <li{% if slot.firstday %} class="firstweek"{% endif %}>
+            {% if slot.today %}
+            <div class="today text-center">
+                <b>HEUTE</b>
+            </div>
+            {% endif %}
+            <button class="day{% if not slot.anyFree %} disabled{% endif %}" href="#" data-date="{{ slot.date }}">
+                <b>{{ slot.date|date('D') }}</b><div>{{ slot.date|date('d. M') }}</div>
+            </button>
+            {% if not slot.anyFree %}
+            <div class="unavailable">Nicht verfügbar</div>
+            {% endif %}
+            {% if slot.firstday %}
+            <div class="week">{{ slot.display_week }}</div>                
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+    <div class="clearfix scheduler-controls">
+        <a href="#" class="float-left" data-startdate="{{ prev }}">&laquo; Zurück</a>
+        <a href="#" class="float-right" data-startdate="{{ next }}">Weiter &raquo;</a>
+    </div>
+</div>
+
+<div class="reveal" id="timeModal" data-reveal>
+    <h3 class="text-center">Datum</h3>
+    <p class="text-center">Wähle eine Uhrzeit</p>
+   
+    <div class="times-container">
+    {% for slot in slots %}
+    <ul class="no-bullet times" data-date="{{ slot.date }}">
+        {% for time,free in slot.times %}
+        <li>
+            <button class="button large hollow{% if free == false %} disabled{% endif %}" data-time="{{ time }}">{{ time }}</button>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+    </div>
+
+    <button class="close-button" data-close aria-label="Fenster schließen" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="reveal" id="adressModal" data-reveal>
+    <button class="button clear back">&laquo; Zurück</button>
+   
+    <div class="grid-x">
+        <div class="cell small-6">
+            <p><b>Telefonisches Vorgespräch</b></p>
+            <p>Dauer: 10min<br />
+            Datum: <span id="scheduleDate"></span><br />
+            Uhrzeit: <span id="scheduleTime"></span></p>
+        </div>
+        <div class="cell small-6">
+            <p><b>Kontakt</b></p>
+            <form method="post" action="" id="scheduleForm" data-abide novalidate>
+                <input type="hidden" name="date" />
+                <input type="hidden" name="time" />
+
+                <input type="text" name="firstname" placeholder="Dein Vorname" aria-errormessage="firstnameError" required />
+                <span class="form-error" id="firstnameError">Dieses Feld darf nicht leer bleiben.</span>
+
+                <input type="text" name="lastname" placeholder="Dein Nachname" aria-errormessage="lastnameError" required />
+                <span class="form-error" id="lastnameError">Dieses Feld darf nicht leer bleiben.</span>
+
+                <input type="text" name="email" placeholder="Deine E-Mail-Adresse" aria-errormessage="emailError" pattern="email" required />
+                <span class="form-error" id="emailError">Bitte eine gültige E-Mail-Adresse angeben.</span>
+
+                <input type="submit" class="button" value="Termin vereinbaren" />
+            </form>
+        </div>
+    </div>
+
+    <button class="close-button" data-close aria-label="Fenster schließen" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>

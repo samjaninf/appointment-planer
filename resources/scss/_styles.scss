@@ -1,0 +1,113 @@
+h3, h4 {
+	margin-top: rem-calc(30);
+	margin-bottom: rem-calc(30);
+}
+.days-container {
+	max-width: rem-calc(985);
+	margin: 0 auto;
+	.days {
+		content: "";
+		display: table;
+		clear: both;
+		li {
+			position: relative;
+			float: left;
+			border-bottom: 1px dashed $light-gray;
+			&.firstweek {
+				border-left: 1px solid $light-gray;
+			}
+			.today {
+				position: absolute;
+				width: rem-calc(140);
+				top: rem-calc(-15);
+			}
+			.day {
+				display: block;
+				height: rem-calc(100);
+				width: rem-calc(100);
+				margin: rem-calc(20);
+				border: 3px solid $success-color;
+				border-radius: 100%;
+				margin-top: rem-calc(20);
+				margin-bottom: rem-calc(50);
+				color: $black;
+				div {
+					color: $medium-gray;
+				}
+				&:hover {
+					background-color: lighten($success-color, 40%);
+                    cursor: pointer;
+				}
+				&.disabled {
+					border-color: $medium-gray;
+					&:hover {
+						background-color: transparent;
+						cursor: default;
+					}
+				}
+			}
+			.unavailable {
+				position: absolute;
+				width: rem-calc(140);
+				bottom: rem-calc(15);
+				font-size: 80%;
+				font-weight: bold;
+				color: $medium-gray;
+			}
+			.week {
+				position: absolute;
+				bottom: rem-calc(-4);
+				height: rem-calc(20);
+				padding: rem-calc(7);
+				display: inline-block;
+				background-color: $white;
+				left: rem-calc(20);
+				font-size: 70%;
+				text-transform: uppercase;
+				color: $dark-gray;
+				font-weight: bold;
+			}
+			&:first-child {
+				border-left: none;
+			}
+		}
+	}
+}
+
+.scheduler-controls {
+    padding-top: rem-calc(30);
+    max-width: rem-calc(950);
+    margin: 0 auto;
+}
+
+.times-container {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+#timeModal {
+    ul {
+        display: none;
+        li {
+            display: inline;
+            text-align: left;
+            margin: rem-calc(9);
+            .button {
+                margin: rem-calc(7) 0;
+            }
+            .disabled {
+                background-color: $light-gray;
+                color: $dark-gray;
+                border-color: $dark-gray;
+                cursor: auto;
+            }
+        }
+    }
+}
+
+#adressModal {
+    .back {
+        padding: rem-calc(5);
+        margin-bottom: rem-calc(30);
+    }
+}
