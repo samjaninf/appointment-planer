@@ -6,15 +6,11 @@ Live version here: https://termin.sebastian-clemens.de
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 
 You need Composer and Node.js for installing.
 
 ### Installing
-
-A step by step series of examples that tell you how to get a development env running
 
 Copy example env file and edit with your settings
 
@@ -31,6 +27,7 @@ composer install
 Go into resources directory and let node.js install components and create assets
 
 ```shell
+cd resources
 npm install
 npm run build
 ```
@@ -40,6 +37,7 @@ You can also run `npm start` for watch and browser sync services. Root your webs
 ## Built With
 
 * [Slim](http://www.slimframework.com/) - a micro framwork for php
+* [Foundation](https://foundation.zurb.com/) - the most advanced responsive front-end framework in the world
 
 ## Authors
 
