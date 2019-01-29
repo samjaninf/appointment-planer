@@ -1,6 +1,6 @@
 # Open source appointment planer
 
-This is an alternative to calendly with support for CalDAV (Nextcloud).
+This is an alternative to calendly with support for CalDAV (Nextcloud). It finds open slots in your calendar and let visitors create new events at your shared link. 
 
 Live version here: https://termin.sebastian-clemens.de
 
