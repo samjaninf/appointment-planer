@@ -2,7 +2,7 @@
 
 This is an alternative to calendly with support for CalDAV (Nextcloud).
 
-Live version here: [](https://termin.sebastian-clemens.de)
+Live version here: https://termin.sebastian-clemens.de
 
 ## Getting Started
 
@@ -39,7 +39,7 @@ You can also run `npm start` for watch and browser sync services. Root your webs
 
 ## Built With
 
-* [Slim](https://github.com/slimphp/Slim) - The php framework used
+* [Slim](http://www.slimframework.com/) - a micro framwork for php
 
 ## Authors
 
