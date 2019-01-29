@@ -15,28 +15,28 @@ require __DIR__ . '/../Lib/simpleCalDAV/SimpleCalDAVClient.php';
 
 class AjaxController extends Controller {
 
-	private function getFreeBusy($startdate) {
+    private function getFreeBusy($startdate) {
 
-		// Settings
+        // Settings
         $calendarIDs = (array) $this->env->calIDs;
-		$timezone    = new DateTimeZone($this->env->timezone);
-		$daysahead   = 'P11D';
+        $timezone    = new DateTimeZone($this->env->timezone);
+        $daysahead   = 'P11D';
 
-		// Initiate client
-		$client = new SimpleCalDAVClient();
-		$client->connect($this->env->caldavurl, $this->env->username, $this->env->password);
+        // Initiate client
+        $client = new SimpleCalDAVClient();
+        $client->connect($this->env->caldavurl, $this->env->username, $this->env->password);
         $arrayOfCalendars = $client->findCalendars();
 
-		// time for now
-		$dt = new DateTime($startdate, $timezone);
-		$now = $dt->format('Ymd\Thms\Z');
+        // time for now
+        $dt = new DateTime($startdate, $timezone);
+        $now = $dt->format('Ymd\Thms\Z');
 
-		// add 30 days
-		$dt->add(new DateInterval($daysahead));
-		$future = $dt->format('Ymd\Thms\Z');
+        // add 30 days
+        $dt->add(new DateInterval($daysahead));
+        $future = $dt->format('Ymd\Thms\Z');
 
-		// filter events from now to 30 days in future
-		$filter = new CalDAVFilter("VEVENT");
+        // filter events from now to 30 days in future
+        $filter = new CalDAVFilter("VEVENT");
         $filter->mustOverlapWithTimerange($now, $future);
         $vcalendar = new VObject\Component\VCalendar;
 
@@ -45,38 +45,38 @@ class AjaxController extends Controller {
             if(isset($arrayOfCalendars[$calendarID])) {
     
                 // set defined calendar
-		        $client->setCalendar($arrayOfCalendars[$calendarID]);
+                $client->setCalendar($arrayOfCalendars[$calendarID]);
                 $events = $client->getCustomReport($filter->toXML());
                 
                 // Summarize all events into one vcalendar object
-		        foreach($events as $event) {
+                foreach($events as $event) {
                     $vevent = VObject\Reader::read($event->getData())->getBaseComponent('VEVENT');
-			        $vcalendar->add($vevent);
+                    $vcalendar->add($vevent);
                 }
             }        
         }
 
-		// Get free-busy report
-		$freebusy = new VObject\FreeBusyGenerator(
-			new DateTime(),
-			$dt,
+        // Get free-busy report
+        $freebusy = new VObject\FreeBusyGenerator(
+            new DateTime(),
+            $dt,
             $vcalendar,
             $timezone
-		);
+        );
         $vcalendar = $freebusy->getResult();
         
         // Return free-busy version of calendar
-		return $vcalendar->VFREEBUSY;
-	}
+        return $vcalendar->VFREEBUSY;
+    }
 
-	public function scheduleEvent($request, $response, $args) {
+    public function scheduleEvent($request, $response, $args) {
 
-		// Settings
+        // Settings
         $eventDuration   = new DateInterval($this->env->eventDuration);
         $slotInterval    = new DateInterval($this->env->slotInterval);
-		$available_start = explode(':', $this->env->availableStart);
-		$available_end   = $this->env->availableEnd;
-		$exclude_days    = (array) $this->env->excludeDays;
+        $available_start = explode(':', $this->env->availableStart);
+        $available_end   = $this->env->availableEnd;
+        $exclude_days    = (array) $this->env->excludeDays;
         $daysahead       = 7;
         $timezone        = new DateTimeZone($this->env->timezone);
         $display_week    = array(
@@ -95,7 +95,7 @@ class AjaxController extends Controller {
         // get vfreebusy calendar object
         $vfreebusy = $this->getFreeBusy($startdate);
 
-		// event start and end datetimes
+        // event start and end datetimes
         $eventSlots = array();
 
         // time for now to compare with
@@ -118,7 +118,7 @@ class AjaxController extends Controller {
 
         // Plan: first loop through each day 
         // second loop from a-start to a-end
-		// loop seven days ahead (matter of UI)
+        // loop seven days ahead (matter of UI)
         for($i = 0; $i < $daysahead; $i++) {
 
             // get weekday as number
@@ -199,5 +199,5 @@ class AjaxController extends Controller {
         );
 
         return $this->view->render($response, 'ajax/scheduler.html', $data); 
-	}
+    }
 }

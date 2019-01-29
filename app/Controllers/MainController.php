@@ -12,12 +12,12 @@ require __DIR__ . '/../Lib/simpleCalDAV/SimpleCalDAVClient.php';
 
 class MainController extends Controller {
 
-	public function index($request, $response, $args) {
-		return $this->view->render($response, 'pages/index.html');
-	}
+    public function index($request, $response, $args) {
+        return $this->view->render($response, 'pages/index.html');
+    }
 
-	public function event($request, $response, $args) {
-		return $this->view->render($response, 'pages/event.html');
+    public function event($request, $response, $args) {
+        return $this->view->render($response, 'pages/event.html');
     }
 
     public function registerEvent($request, $response, $args) {
@@ -46,12 +46,12 @@ class MainController extends Controller {
             ]
         ]);
         
-		// Settings
+        // Settings
         $mainCalendarID = $this->env->mainCalID;
 
-		// Initiate client
-		$client = new SimpleCalDAVClient();
-		$client->connect($this->env->caldavurl, $this->env->username, $this->env->password);
+        // Initiate client
+        $client = new SimpleCalDAVClient();
+        $client->connect($this->env->caldavurl, $this->env->username, $this->env->password);
         $arrayOfCalendars = $client->findCalendars();
 
         // create new event        

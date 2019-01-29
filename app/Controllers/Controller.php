@@ -13,8 +13,8 @@ class Controller {
 
    // get easy access to container instances
    public function __get($instance) {
-   		if($this->container->{$instance}) {
-   			return $this->container->{$instance};
-   		}
+        if($this->container->{$instance}) {
+            return $this->container->{$instance};
+        }
    }
 }
