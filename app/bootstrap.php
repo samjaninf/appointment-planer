@@ -34,18 +34,16 @@ $container['view'] = function ($container) {
 };
 
 $container['mailer'] = function($container) {
-    $twig   = $container['view'];
-    $env    = $container['env'];
-    $mailer = new \Anddye\Mailer\Mailer($twig, [
-        'host'      => $env->host,      // SMTP Host
-        'port'      => $env->port,      // SMTP Port
-        'username'  => $env->user,      // SMTP Username
-        'password'  => $env->pass,      // SMTP Password
-        'protocol'  => $env->protocol   // SSL or TLS
-    ]);
-
-    // Set the details of the default sender
-    $mailer->setDefaultFrom($env->fromMail, $env->fromName);
+    $env = $container['env'];
+    $mailer = new \PHPMailer\PHPMailer\PHPMailer;
+    $mailer->isSMTP();
+    $mailer->host       = $env->host;
+    $mailer->SMTPAuth   = true;
+    $mailer->Username   = $env->user;
+    $mailer->Password   = $env->pass;
+    $mailer->SMTPSecure = $env->protocol;
+    $mailer->Port       = 465;
+    $mailer->setFrom($env->fromMail, $env->fromName);
 
     return $mailer;
 };
