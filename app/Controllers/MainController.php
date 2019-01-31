@@ -66,10 +66,16 @@ class MainController extends Controller {
             'datetime'    => $dtstart->format('d.m.Y - H:i')
         );
 
-        // send mail to event owner
+        // send mail to owner
         $this->mailer->addAddress('coaching@sebclemens.de', 'Sebastian Clemens');
-        $this->mailer->Subject = 'Neuer Termin:' . $summary;
+        $this->mailer->Subject = 'Neuer Termin: ' . $summary;
         $this->mailer->Body    = $this->view->fetch('mails/newEventOwner.html', $data);
+        $this->mailer->send();
+
+        // send mail to attende
+        $this->mailer->addAddress($email, $firstName . ' ' . $lastName);
+        $this->mailer->Subject = 'Dein Termin: ' . $summary;
+        $this->mailer->Body    = $this->view->fetch('mails/newEventAttende.html', $data);
         $this->mailer->send();
 
         // display confirmed page
