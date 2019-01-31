@@ -36,8 +36,10 @@ $container['view'] = function ($container) {
 $container['mailer'] = function($container) {
     $env = $container['env'];
     $mailer = new \PHPMailer\PHPMailer\PHPMailer;
+    $mailer->SMTPDebug  = 2;
     $mailer->isSMTP();
-    $mailer->host       = $env->host;
+    $mailer->CharSet    = 'UTF-8';
+    $mailer->Host       = $env->host;
     $mailer->SMTPAuth   = true;
     $mailer->Username   = $env->user;
     $mailer->Password   = $env->pass;

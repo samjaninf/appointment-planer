@@ -58,11 +58,12 @@ class MainController extends Controller {
         $client->setCalendar($arrayOfCalendars[$mainCalendarID]);
         $client->create($vcalendar->serialize());
 
+        // prepare data for mail template
         $data = array(
-            'summary': $summary,
-            'description': $description,
-            'duration': $this->env->eventDuration,
-            'datetime': $dtstart->format('d.m.Y - H:i');
+            'summary'     => $summary,
+            'description' => $description,
+            'duration'    => $this->env->eventDuration,
+            'datetime'    => $dtstart->format('d.m.Y - H:i')
         );
 
         // send mail to event owner
