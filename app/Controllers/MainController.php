@@ -58,8 +58,18 @@ class MainController extends Controller {
         $client->setCalendar($arrayOfCalendars[$mainCalendarID]);
         $client->create($vcalendar->serialize());
 
-        // send mails
-        //$this->mailer->sendMessage('mails/');
+        $data = array(
+            'summary': $summary,
+            'description': $description,
+            'duration': $this->env->eventDuration,
+            'datetime': $dtstart->format('d.m.Y - H:i');
+        );
+
+        // send mail to event owner
+        $this->mailer->addAddress('coaching@sebclemens.de', 'Sebastian Clemens');
+        $this->mailer->Subject = 'Neuer Termin:' . $summary;
+        $this->mailer->Body    = $this->view->fetch('mails/newEventOwner.html', $data);
+        $this->mailer->send();
 
         // display confirmed page
         return $this->view->render($response, 'pages/confirmed.html');
